@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Manual de Usuario - Control de Unidades</title>
+  <style>
+
+
+body.modal-abierto {
+  overflow: hidden;
+}
+#modal-imagen {
+  overflow-y: auto;
+}
+.imagen-ampliada {
+  max-height: 85vh;
+  overflow-y: auto;
+}
+.imagen-ampliada img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: auto;
+  border-radius: 8px;
+}
+
+
+
+
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      background-color: #f9f9fb;
+      color: #1C1B1F;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #6650a4;
+      color: white;
+      padding: 5px 1px;
+      text-align: center;
+    }
+    header img {
+      max-width: 140px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+    h1 {
+      margin: 10px 0;
+      font-size: 32px;
+    }
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: normal;
+      color: #EFB8C8;
+    }
+    .container {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    .card {
+      background-color: #fff;
+      border-left: 8px solid #625b71;
+      box-shadow: 0 0 8px rgba(0,0,0,0.06);
+      margin-bottom: 25px;
+      padding: 20px;
+      border-radius: 6px;
+    }
+    .card h3 {
+      color: #6650a4;
+      margin-top: 0;
+    }
+    .intro {
+      font-size: 16px;
+    }
+
+    #modal-agregar, #modal-imagen {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .contenido, .imagen-ampliada {
+      background-color: white;
+      padding: 24px;
+      border-radius: 12px;
+      max-width: 900px;
+      width: 90%;
+      box-shadow: 0 0 16px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    .cerrar {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 18px;
+      color: #6650a4;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+#modal-agregar {
+  overflow-y: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.contenido {
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+
+    .miniatura {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="logo_app.png" alt="Logo de la aplicación" />
+  <h1>Manual de Usuario</h1>
+  <h2>Aplicación: Control de Unidades</h2>
+  <h2>Creada por Cristobal Diaz y Enrique Hazael</h2>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h3>Introducción</h3>
+    <p class="intro">
+      Este manual técnico documenta el desarrollo completo de la aplicación <strong>Control de Unidades</strong>, diseñada para optimizar el tiempo de mantenimiento de las unidades de los mecánicos del corporativo. A lo largo del documento se explican los fundamentos técnicos, la arquitectura usada, los beneficios reales demostrados y las funcionalidades clave que hacen posible una afinación eficiente de motores.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Justificación técnica</h3>
+    <p class="intro">
+      En el proceso de mantenimiento de unidades automotrices, el tiempo invertido en identificar piezas, diagramas, fusibles y herramientas genera pérdida de eficiencia y mayores costos operativos. La app <strong>Control de Unidades</strong> soluciona este problema permitiendo al mecánico registrar información confiable, que reduce el tiempo de afinación de 3 horas y media a tan solo minutos. Este registro es validado por el mismo técnico, mejorando la precisión y reutilización del conocimiento adquirido.
+    </p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="card">
+    <h3>📘 Acciones disponibles en la aplicación</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+      <a href="javascript:void(0);" onclick="abrirModal()" style="text-decoration: none;">
+        <div style="background-color:#fff; border:2px solid #EFB8C8; border-radius:8px; padding:16px;">
+          <h4 style="color:#6650a4; margin-top:0;">➕ Agregar una unidad</h4>
+          <p style="margin-bottom:0;">Crea una ficha para cada vehículo con datos importantes.</p>
+        </div>
+      </a>
+
+      <a href="javascript:void(0);" onclick="abrirEditar()" style="text-decoration: none;">
+  <div style="background-color:#fff; border:2px solid #D0BCFF; border-radius:8px; padding:16px;">
+    <h4 style="color:#6650a4; margin-top:0;">✏️ Editar datos de unidad</h4>
+    <p style="margin-bottom:0;">Actualiza cualquier información técnica de una unidad.</p>
+  </div>
+</a>
+
+<a href="javascript:void(0);" onclick="abrirEliminar()" style="text-decoration: none;">
+  <div style="background-color:#fff; border:2px solid #CCC2DC; border-radius:8px; padding:16px;">
+    <h4 style="color:#6650a4; margin-top:0;">🗑️ Eliminar unidad</h4>
+    <p style="margin-bottom:0;">Retira una unidad de la lista cuando ya no se use.</p>
+  </div>
+</a>
+
+<a href="javascript:void(0);" onclick="abrirConsultar()" style="text-decoration: none;">
+  <div style="background-color:#fff; border:2px solid #A8C1E1; border-radius:8px; padding:16px;">
+    <h4 style="color:#6650a4; margin-top:0;">📄 Consultar ficha técnica</h4>
+    <p style="margin-bottom:0;">Visualiza todos los datos registrados para una unidad.</p>
+  </div>
+</a>
+
+<a href="javascript:void(0);" onclick="abrirBuscar()" style="text-decoration: none;">
+  <div style="background-color:#fff; border:2px solid #B5D8C7; border-radius:8px; padding:16px;">
+    <h4 style="color:#6650a4; margin-top:0;">🔍 Buscar unidad</h4>
+    <p style="margin-bottom:0;">Encuentra rápidamente una unidad específica registrada.</p>
+  </div>
+</a>
+
+<a href="javascript:void(0);" onclick="abrirPortada()" style="text-decoration: none;">
+  <div style="background-color:#fff; border:2px solid #FFE082; border-radius:8px; padding:16px;">
+    <h4 style="color:#6650a4; margin-top:0;">📘 Portada institucional</h4>
+    <p style="margin-bottom:0;">Visualiza los datos académicos del proyecto.</p>
+  </div>
+</a>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+<div id="modal-agregar">
+  <div class="contenido">
+    <span class="cerrar" onclick="cerrarModal()">Cerrar ✕</span>
+    <h2 style="color:#6650a4;">➕ Agregar una unidad</h2>
+    <p>Permite crear una ficha técnica por vehículo, incluyendo informacion de afinacion, herramientas y datos de la unidad.</p>
+
+    <h4>Paso a paso:</h4>
+    <ol>
+      <li>Toca el icono de " + " “Agregar unidad” de la barra superior de la pantalla principal.</li>
+      <li>Completa los campos como Marca, Modelo, Año, Color, etc.</li>
+      <li>Agrega los datos técnicos: filtro, aceite, fusibles, etc.</li>
+      <li>Guarda la ficha técnica.</li>
+    </ol>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <img src="capturas/agregar_unidad.png" alt="Formulario unidad"
+           class="miniatura" onclick="abrirImagen()" />
+      <p style="font-size:14px; color:#625b71;">Captura: Formulario completo para afinación</p>
+    </div>
+
+    <h4>💡 Recomendaciones:</h4>
+    <ul>
+      <li>Usa nombres precisos: “Ford”, “Chevrolet”, “Toyota” etc.</li>
+      <li>Especifica número de bujía, filtro, aceite, etc.</li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+<!-- Modal de Editar unidad -->
+<div id="modal-editar" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 9999;">
+  <div class="contenido">
+    <span class="cerrar" onclick="cerrarEditar()">Cerrar ✕</span>
+    <h2 style="color:#6650a4;">✏️ Editar datos de unidad</h2>
+    <p>Permite actualizar información técnica de una unidad previamente registrada en la app.</p>
+
+    <h4>Paso a paso:</h4>
+    <ol>
+      <li>Desde la pantalla principal, toca la tarjeta de una unidad ya registrada, después toca el botón "editar información" que se encuentra en la parte inferior derecha.</li>
+      <li>Se abrirá la ficha con los datos actuales de la unidad.</li>
+      <li>Modifica los campos necesarios (marca, modelo, filtro, fusibles, viscosidad, etc.).</li>
+      <li>Presiona “Actualizar unidad” para guardar los cambios.</li>
+    </ol>
+
+    <h4>💡 Recomendaciones:</h4>
+    <ul>
+      <li>Verifica los datos antes de editar: una buena práctica es consultar la ficha anterior.</li>
+      <li>No elimines datos válidos: si ya fueron confirmados y probados, mejor complementarlos.</li>
+      <li>Marca “N/A” si un campo no aplica para la unidad.</li>
+    </ul>
+  </div>
+</div>
+
+
+
+<!-- Modal de Eliminar unidad -->
+<div id="modal-eliminar" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 9999;">
+  <div class="contenido">
+    <span class="cerrar" onclick="cerrarEliminar()">Cerrar ✕</span>
+    <h2 style="color:#6650a4;">🗑️ Eliminar unidad</h2>
+    <p>Esta función permite eliminar una ficha técnica cuando la unidad ya no forma parte del corporativo o fue dada de baja.</p>
+
+    <h4>Paso a paso:</h4>
+    <ol>
+      <li>Desde la lista de unidades, toca el ícono 🗑️ junto a la unidad que deseas retirar.</li>
+    </ol>
+
+    <h4>💡 Recomendaciones:</h4>
+    <ul>
+      <li>Verifica que la unidad ya no tenga movimientos recientes antes de eliminarla.</li>
+      <li>No elimines si se trata de una unidad temporalmente inactiva.</li>
+      <li>Guarda una copia externa si los datos podrían requerirse en el futuro.</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- Modal de Consultar ficha técnica -->
+<div id="modal-consultar" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 9999;">
+  <div class="contenido">
+    <span class="cerrar" onclick="cerrarConsultar()">Cerrar ✕</span>
+    <h2 style="color:#6650a4;">📄 Consultar ficha técnica</h2>
+    <p>Permite ver todos los datos previamente registrados de una unidad, incluyendo información técnica detallada.</p>
+
+    <h4>Paso a paso:</h4>
+    <ol>
+      <li>Desde la ventana principal, toca alguna de las tarjetas</li>
+      <li>Se abrirá la ficha con imagén, marca, modelo, año, fusibles, filtro, aceite y otros datos.</li>
+      <li>Esta es una de las pantallas más importantes de la aplicación ya que aquí se concentra toda la información de la unidad.</li>
+    </ol>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <img src="capturas/consultar_ficha.png" alt="Ficha técnica"
+           class="miniatura" onclick="abrirImagenConsultar()" />
+      <p style="font-size:14px; color:#625b71;">Captura: Ficha técnica completa</p>
+    </div>
+
+    <h4>💡 Recomendaciones:</h4>
+    <ul>
+      <li>Verifica cada campo antes de tomar decisiones técnicas.</li>
+      <li>Consulta el historial de servicios si está disponible.</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- Modal de Buscar unidad -->
+<div id="modal-buscar" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 9999;">
+  <div class="contenido">
+    <span class="cerrar" onclick="cerrarBuscar()">Cerrar ✕</span>
+    <h2 style="color:#6650a4;">🔍 Buscar unidad</h2>
+    <p>Permite localizar rápidamente una unidad registrada en la base de datos utilizando filtros por marca, modelo, año o palabras clave técnicas.</p>
+
+    <h4>Paso a paso:</h4>
+    <ol>
+      <li>Desde el menú principal, toca “Buscar unidad”.</li>
+      <li>Ingresa una palabra clave como “Ford” o “Filtro”.</li>
+      <li>El sistema mostrará las unidades que coincidan con tu búsqueda.</li>
+      <li>Toca la unidad para consultar o editar sus datos.</li>
+    </ol>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <img src="capturas/buscar_unidad.png" alt="Búsqueda técnica"
+           class="miniatura" onclick="abrirImagenBuscar()" />
+      <p style="font-size:14px; color:#625b71;">Captura: Filtro de búsqueda por marca y modelo</p>
+    </div>
+
+    <h4>💡 Recomendaciones:</h4>
+    <ul>
+      <li>Usa combinaciones específicas como “Nissan 2000 bujía”.</li>
+      <li>Evita palabras genéricas como “carro” o “motor”.</li>
+      <li>Los resultados dependen de los datos previamente registrados.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Modal Portada institucional -->
+<div id="modal-portada" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 9999;">
+  <div class="contenido">
+    <span class="cerrar" onclick="cerrarPortada()">Cerrar ✕</span>
+    <h2 style="color:#6650a4;">📘 Portada institucional</h2>
+
+    <div style="text-align:center; margin-bottom: 20px;">
+      <img src="logo_app.png" alt="Ícono de la app" style="width:100px; height:auto; margin-right:20px;" />
+      <img src="capturas/logo_universidad.png" alt="Logo universidad" style="width:120px; height:auto;" />
+    </div>
+
+    <p><strong>Nombre del proyecto:</strong> Aplicación móvil “Control de Unidades”</p>
+    <p><strong>Universidad:</strong> Universidad ICEL</p>
+    <p><strong>Campus:</strong> Zaragoza</p>
+    <p><strong>Profesor:</strong> Alberto Vázquez Ramírez </p>
+    <p><strong>Materia:</strong> Aplicaciones Móviles</p>
+    <p><strong>Cuatrimestre:</strong> Séptimo</p>
+    <p><strong>Integrantes:</strong> Cristobal Díaz y Enrique Hazael</p>
+
+    <p style="margin-top:20px;">Este proyecto fue realizado con fines educativos para demostrar habilidades en desarrollo móvil, diseño de interfaces con Jetpack Compose y documentación profesional mediante HTML/CSS.</p>
+  </div>
+</div>
+
+
+<!-- Modal para imagen ampliada -->
+<div id="modal-imagen-buscar" style="display: none; position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center;
+  justify-content: center; z-index: 9999;">
+  <div class="imagen-ampliada">
+    <span class="cerrar" onclick="cerrarImagenBuscar()">Cerrar ✕</span>
+    <img src="capturas/buscar_unidad.png" alt="Imagen ampliada"
+         style="max-width:95vw; max-height:95vh; border-radius:8px; display:block; margin:auto;" />
+  </div>
+</div>
+
+
+<!-- Modal de imagen ampliada -->
+<div id="modal-imagen-consultar" style="display: none; position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center;
+  justify-content: center; z-index: 9999;">
+  <div class="imagen-ampliada">
+    <span class="cerrar" onclick="cerrarImagenConsultar()">Cerrar ✕</span>
+    <img src="capturas/consultar_ficha.png" alt="Imagen ampliada"
+         style="max-width:95vw; max-height:95vh; border-radius:8px; display:block; margin:auto;" />
+  </div>
+</div>
+
+
+
+<!-- Modal para ampliar imagen -->
+<div id="modal-imagen">
+  <div class="imagen-ampliada">
+    <span class="cerrar" onclick="cerrarImagen()">Cerrar ✕</span>
+    <img src="capturas/agregar_unidad.png" alt="Imagen ampliada"
+         style="max-width:100%; border-radius:8px;" />
+  </div>
+</div>
+
+<!-- Script funcional -->
+<script>
+  function abrirModal() {
+    document.getElementById("modal-agregar").style.display = "flex";
+  }
+  function cerrarModal() {
+    document.getElementById("modal-agregar").style.display = "none";
+  }
+
+  function abrirImagen() {
+    document.body.classList.add("modal-abierto");
+    document.getElementById("modal-imagen").style.display = "flex";
+  }
+  function cerrarImagen() {
+    document.body.classList.remove("modal-abierto");
+    document.getElementById("modal-imagen").style.display = "none";
+  }
+function abrirEditar() {
+  document.getElementById("modal-editar").style.display = "flex";
+}
+function cerrarEditar() {
+  document.getElementById("modal-editar").style.display = "none";
+}
+function abrirEliminar() {
+  document.getElementById("modal-eliminar").style.display = "flex";
+}
+function cerrarEliminar() {
+  document.getElementById("modal-eliminar").style.display = "none";
+}
+
+function abrirConsultar() {
+  document.getElementById("modal-consultar").style.display = "flex";
+}
+function cerrarConsultar() {
+  document.getElementById("modal-consultar").style.display = "none";
+}
+function abrirImagenConsultar() {
+  document.body.classList.add("modal-abierto");
+  document.getElementById("modal-imagen-consultar").style.display = "flex";
+}
+function cerrarImagenConsultar() {
+  document.body.classList.remove("modal-abierto");
+  document.getElementById("modal-imagen-consultar").style.display = "none";
+}
+function abrirBuscar() {
+  document.getElementById("modal-buscar").style.display = "flex";
+}
+function cerrarBuscar() {
+  document.getElementById("modal-buscar").style.display = "none";
+}
+function abrirImagenBuscar() {
+  document.body.classList.add("modal-abierto");
+  document.getElementById("modal-imagen-buscar").style.display = "flex";
+}
+function cerrarImagenBuscar() {
+  document.body.classList.remove("modal-abierto");
+  document.getElementById("modal-imagen-buscar").style.display = "none";
+}
+function abrirPortada() {
+  document.getElementById("modal-portada").style.display = "flex";
+}
+function cerrarPortada() {
+  document.getElementById("modal-portada").style.display = "none";
+}
+
+
+</script>
+
+</body>
+</html>
