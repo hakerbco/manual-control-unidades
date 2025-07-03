@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Manual de Usuario - Control de Unidades</title>
   <style>
 
@@ -41,7 +41,7 @@ body.modal-abierto {
       text-align: center;
     }
     header img {
-      max-width: 140px;
+      max-width: 200px;
       height: auto;
       margin-bottom: 20px;
     }
@@ -136,7 +136,7 @@ body.modal-abierto {
   <img src="Logo_app.png" alt="Logo de la aplicación" />
   <h1>Manual de Usuario</h1>
   <h2>Aplicación: Control de Unidades</h2>
-  <h2>Creada por Cristobal Diaz y Enrique Hazael</h2>
+  <h2>Creada por Cristóbal Díaz y Enrique Hazael</h2>
 </header>
 
 <div class="container">
@@ -191,6 +191,13 @@ body.modal-abierto {
   <div style="background-color:#fff; border:2px solid #B5D8C7; border-radius:8px; padding:16px;">
     <h4 style="color:#6650a4; margin-top:0;">🔍 Buscar unidad</h4>
     <p style="margin-bottom:0;">Encuentra rápidamente una unidad específica registrada.</p>
+  </div>
+</a>
+
+<a href="javascript:void(0);" onclick="abrirRespaldo()" style="text-decoration: none;">
+  <div style="background-color:#fff; border:2px solid #BBDEFB; border-radius:8px; padding:16px;">
+    <h4 style="color:#6650a4; margin-top:0;">📤 Respaldo y restauración</h4>
+    <p style="margin-bottom:0;">Guarda y recupera fichas técnicas en caso de reinicio o cambio de dispositivo.</p>
   </div>
 </a>
 
@@ -349,6 +356,52 @@ body.modal-abierto {
   </div>
 </div>
 
+
+<!-- Modal de Respaldo y restauración -->
+<div id="modal-respaldo" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 9999;">
+  <div class="contenido">
+    <span class="cerrar" onclick="cerrarRespaldo()">Cerrar ✕</span>
+    <h2 style="color:#6650a4;">📤 Respaldo y restauración</h2>
+    <p>Permite exportar todas las fichas técnicas y volverlas a importar en caso de reinicio, pérdida de datos o migración de dispositivo.</p>
+
+    <h4>Paso a paso:</h4>
+    <ol>
+      <li>Desde la pantalla principal, en la barra superior toca el icono de respaldo (nuve con flecha).</li>
+      <li>Se generará un archivo comprimido con formato (.zip).</li>
+      <li>Tendrá la opcion de guardar el archivo en cualquier parte del dispositivo.</li>
+      <li>Para restaurar un respaldo, elige “📥 Restaurar fichas” ubicado en la misma barra a la derecha de "respaldo".</li>
+      <li>seleccionar el archivo (.zip) previamente guardado.</li>
+    </ol>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <img src="respaldo_restauracion.png" alt="Proceso de respaldo"
+           class="miniatura" onclick="abrirImagenRespaldo()" />
+      <p style="font-size:14px; color:#625b71;">Captura: Menú de respaldo y carga técnica</p>
+    </div>
+
+    <h4>💡 Recomendaciones:</h4>
+    <ul>
+      <li>Realiza respaldos periódicos después de editar unidades.</li>
+      <li>Guarda copias en lugares distintos (nube + USB).</li>
+      <li>Verifica que el archivo restaurado no esté corrupto antes de iniciar el proceso.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Modal imagen ampliada -->
+<div id="modal-imagen-respaldo" style="display: none; position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center;
+  justify-content: center; z-index: 9999;">
+  <div class="imagen-ampliada">
+    <span class="cerrar" onclick="cerrarImagenRespaldo()">Cerrar ✕</span>
+    <img src="respaldo_restauracion.png" alt="Imagen ampliada"
+         style="max-width:95vw; max-height:95vh; border-radius:8px; display:block; margin:auto;" />
+  </div>
+</div>
+
+
+
 <!-- Modal Portada institucional -->
 <div id="modal-portada" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 9999;">
@@ -472,6 +525,21 @@ function abrirPortada() {
 function cerrarPortada() {
   document.getElementById("modal-portada").style.display = "none";
 }
+function abrirRespaldo() {
+  document.getElementById("modal-respaldo").style.display = "flex";
+}
+function cerrarRespaldo() {
+  document.getElementById("modal-respaldo").style.display = "none";
+}
+function abrirImagenRespaldo() {
+  document.body.classList.add("modal-abierto");
+  document.getElementById("modal-imagen-respaldo").style.display = "flex";
+}
+function cerrarImagenRespaldo() {
+  document.body.classList.remove("modal-abierto");
+  document.getElementById("modal-imagen-respaldo").style.display = "none";
+}
+
 
 
 </script>
